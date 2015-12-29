@@ -8,6 +8,8 @@ test <- readRDS("data/cert_test_s15.rds") %>%
 test[,2:29] <- as.integer(!is.na(test[,2:29]))
 
 BehavChange <- function(before,after){
+                   if(is.na(before) | is.na(after))
+                       return(NA)
                    if(before == "N" & after == "N")
                        return("No/No")
                    if(before == "Y" & after == "Y")
@@ -16,8 +18,7 @@ BehavChange <- function(before,after){
                        return("No/Yes")
                    if(before == "Y" & after == "N")
                        return("Yes/No")
-                   if(is.na(before) | is.na(after))
-                       return(NA)
+
 }
 
 Response <- function(first,second){
@@ -43,3 +44,11 @@ test$R20 = mapply(Response,test$S20.1,test$S20.2)
 test$R21 = mapply(Response,test$S21.1,test$S21.2)
 test$R22 = mapply(Response,test$S22.1,test$S22.2)
 test$R23 = mapply(Response,test$S23.1,test$S23.2)
+
+test$B1 = mapply(BehavChange,test$R10,test$R17)
+test$B2 = mapply(BehavChange,test$R11,test$R18)
+test$B3 = mapply(BehavChange,test$R12,test$R19)
+test$B4 = mapply(BehavChange,test$R13,test$R20)
+test$B5 = mapply(BehavChange,test$R14,test$R21)
+test$B6 = mapply(BehavChange,test$R15,test$R22)
+test$B7 = mapply(BehavChange,test$R16,test$R23)
