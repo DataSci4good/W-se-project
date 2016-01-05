@@ -10,7 +10,7 @@ saveRDS(pretest_s14,"data/pretest_s14.rds")
 cert_test_s14 <- read.xlsx("data/Fall 2014 Aggregate Data csv.xlsx",
                            sheet = "F'14 Cert. Test Data",
                            rows = c(1:23637),
-                           cols = c(1:105))
+                           cols = c(1:106))
 saveRDS(cert_test_s14,"data/cert_test_s14.rds")
 
 
