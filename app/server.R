@@ -1,0 +1,90 @@
+shinyServer(function(input, output) {
+  
+  #Displaying question.
+  output$value = renderPrint({as.character(survey.questions[as.numeric(input$questions), 2])})
+  
+  #Taking in which question was selected.
+  selected.question.number = reactive({
+    filter(survey.questions, Item_num == input$questions)$Item_num
+  })
+  
+  #Generating a regex to find the vector's names corresponding to the selected question.
+  question.regex = reactive({
+    paste0('S',as.character(selected.question.number()), '\\','.')
+  })
+  
+  #Getting the indices which match the regex
+  question.indices = reactive({
+    grep(question.regex(), banking.questions.percentages.df$answers)
+  })
+  
+  #Storing the data pertaining to the chosen question.
+  question.data.percentage = reactive({
+    #banking.questions.percentages[names(banking.questions.percentages)[question.indices()]]
+    banking.questions.percentages.df[question.indices(),]
+  })
+  
+  #Respondents by survey answer
+  output$plot = renderPlot({plotData(question.data.percentage())})
+  
+  plotData = function(df) {
+    ggplot(df, 
+           aes(x=answers, y = banking.questions.percentages)) +
+      geom_bar(stat = 'identity', fill="white", colour="darkgreen") +
+      theme_bw() + 
+      ylab('Frequency') + 
+      xlab('Response') +
+      ggtitle('Numbers of Respondents By Survey Question Response') +
+      geom_text(aes(label = round(banking.questions.percentages, 2), 
+                    y = round(banking.questions.percentages) + 1200))
+  }
+  
+  #Student mean performance per survey response
+  
+  #Getting the indices which match the regex
+  question.indices2 = reactive({
+    grep(question.regex(), score.by.survey.answer.df$answers)
+  })
+  
+  #Storing the data pertaining to the chosen question.
+  question.data.scores = reactive({
+    #banking.questions.percentages[names(banking.questions.percentages)[question.indices()]]
+    score.by.survey.answer.df[question.indices2(),]
+  })
+  
+  output$plot2 = renderPlot({plotData2(question.data.scores())})
+  
+  plotData2 = function(df) {
+    ggplot(df, 
+           aes(x=answers, y =  score.by.survey.answer)) +
+      geom_bar(stat = 'identity', fill="white", colour="darkgreen") +
+      theme_bw() + 
+      ylab('Percentage') + 
+      xlab('Response') +
+      ggtitle('Mean Test Score By Survey Question Response') +
+      geom_text(aes(label = round(score.by.survey.answer, 2), 
+                    y = round(score.by.survey.answer) + 4))
+  }
+  
+  survey.responses = reactive({
+    display.survey.responses[grep(question.regex(), display.survey.responses$Code), ]
+  })
+  
+  output$survey.responses = renderDataTable({survey.responses()},
+                                            options = list(searching = FALSE, 
+                                                           pageLength = 14, 
+                                                           lengthChange = FALSE, 
+                                                           ordering = FALSE,
+                                                           paging = FALSE, 
+                                                           info = FALSE, 
+                                                           columnDefs = list(name = c('1','2'), targets = c(1, 2))
+                                                           ))
+  
+  #Testing
+  output$test = renderText({paste('Question', selected.question.number(), 'Choices')})
+  output$test = renderText({paste('Question', question.regex())})
+  output$test = renderText({paste('Question', question.indices())})
+  output$table = renderDataTable({question.data.percentage()})
+  
+  
+})#end Shiny Server
