@@ -1,4 +1,3 @@
-setwd('C:/Users/Gordon/Desktop/GitHub')
 library(dplyr)
 library(shiny)
 library(ggplot2)
