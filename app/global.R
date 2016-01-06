@@ -1,12 +1,13 @@
+setwd('C:/Users/Gordon/Desktop/GitHub')
 library(dplyr)
 library(shiny)
 library(ggplot2)
 
-cert.test.14 = readRDS('C:\\Users\\Gordon\\Desktop\\GitHub\\W-se-project\\data\\cert_test_s14.rds')
-cert.test.15 = readRDS('C:\\Users\\Gordon\\Desktop\\GitHub\\W-se-project\\data\\cert_test_s15.rds')
+cert.test.14 = readRDS('./W-se-project/data/cert_test_s14.rds')
+cert.test.15 = readRDS('./W-se-project/data/cert_test_s15.rds')
 
-survey.questions = read.csv('C:\\Users\\Gordon\\Desktop\\GitHub\\W-se-project\\data\\t_survey_items.csv')
-questions.answers = read.csv('C:\\Users\\Gordon\\Desktop\\GitHub\\W-se-project\\data\\t_survey_responses.csv')
+survey.questions = read.csv('./W-se-project/data/t_survey_items.csv')
+questions.answers = read.csv('./W-se-project/data/t_survey_responses.csv')
 
 #All questions except 10 and 11
 survey.questions = survey.questions[-c(10:23), ]
