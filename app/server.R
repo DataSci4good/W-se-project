@@ -1,7 +1,7 @@
 shinyServer(function(input, output) {
   
   #Displaying question.
-  output$value = renderPrint({as.character(survey.questions[as.numeric(input$questions), 2])})
+  output$value = renderPrint({as.character(filter(survey.questions, Item_num == as.numeric(input$questions))$Item_text )})
   
   #Taking in which question was selected.
   selected.question.number = reactive({
@@ -36,7 +36,7 @@ shinyServer(function(input, output) {
       xlab('Response') +
       ggtitle('Numbers of Respondents By Survey Question Response') +
       geom_text(aes(label = round(banking.questions.percentages, 2), 
-                    y = round(banking.questions.percentages) + 1200))
+                    y = round(banking.questions.percentages) + 1500))
   }
   
   #Student mean performance per survey response

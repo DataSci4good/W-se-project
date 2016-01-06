@@ -1,5 +1,3 @@
-setwd('C:\\Users\\Gordon\\Desktop\\_datasci4good\\wise\\app')
-
 library(dplyr)
 library(shiny)
 library(ggplot2)
@@ -11,6 +9,9 @@ survey.questions = read.csv('C:\\Users\\Gordon\\Desktop\\GitHub\\W-se-project\\d
 questions.answers = read.csv('C:\\Users\\Gordon\\Desktop\\GitHub\\W-se-project\\data\\t_survey_responses.csv')
 
 #All questions except 10 and 11
+survey.questions = survey.questions[-c(10:23), ]
+rownames(survey.questions) = append(1:9,12:16)
+survey.questions[c(seq(10, 14, 1)), 1] = seq(12, 16, 1)
 questions = as.vector(survey.questions[-c(10,11),2])
 answers = questions.answers[!(questions.answers$Item %in% c(10,11)), ]
 
