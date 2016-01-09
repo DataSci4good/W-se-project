@@ -1,11 +1,11 @@
 shinyServer(function(input, output) {
   
   #Displaying question.
-  output$value = renderPrint({as.character(filter(survey.questions, Item_num == as.numeric(input$questions))$Item_text )})
+  output$value = renderPrint({as.character(filter(survey.questions2, Item_num == as.numeric(input$questions))$Item_text )})
   
   #Taking in which question was selected.
   selected.question.number = reactive({
-    filter(survey.questions, Item_num == input$questions)$Item_num
+    filter(survey.questions2, Item_num == input$questions)$Item_num
   })
   
   #Generating a regex to find the vector's names corresponding to the selected question.

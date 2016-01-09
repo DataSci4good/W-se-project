@@ -4,10 +4,6 @@ shinyUI(navbarPage('Wise Project', id='nav',
                             fluidPage(
                               
                               sidebarPanel(
-#                                 selectInput("question", 
-#                                             "Choose A Question", 
-#                                             choices = questions, 
-#                                             selected = questions[1]),
                                 radioButtons('questions', 
                                              'Choose a Question To View',
                                              c('1' = '1', '2' = '2', '3' = '3', '4' = '4', 
@@ -32,14 +28,19 @@ shinyUI(navbarPage('Wise Project', id='nav',
                             fluidPage(
                               
                               sidebarPanel(
-                                selectInput("question", 
-                                            "Choose A Question", 
-                                            choices = questions, 
-                                            selected = questions[1])
+                                radioButtons('questions2', 
+                                             'Choose a Question To View',
+                                             c('10' = '10', '11' = '11'), inline = TRUE),
+                                hr(),
+                                strong("Question"),
+                                #verbatimTextOutput("value"),
+                                hr()#,
+                                #dataTableOutput('survey.responses')
                               ),#sidebarPanel end
                               
                               mainPanel(
-                                
+                                #plotOutput("plot"),
+                                #plotOutput("plot2")
                               )
                             ) #fluidPage end
                    )
