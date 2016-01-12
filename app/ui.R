@@ -24,23 +24,26 @@ shinyUI(navbarPage('Wise Project', id='nav',
                    ) #fluidPage end
                    ),
                    
-                   tabPanel('Place Holder',
+                   tabPanel('Behavioral Change',
                             fluidPage(
                               
                               sidebarPanel(
-                                radioButtons('questions2', 
-                                             'Choose a Question To View',
-                                             c('10' = '10', '11' = '11'), inline = TRUE),
+                                radioButtons('behaviors', 
+                                             'Choose a Behavior To View',
+                                             c('1' = '1', '2' = '2', '3' = '3', '4' = '4',
+                                               '5' = '5', '6' = '6', '7' = '7'), inline = TRUE),
                                 hr(),
-                                strong("Question"),
+                                strong("Behavior"),
                                 #verbatimTextOutput("value"),
-                                hr()#,
-                                #dataTableOutput('survey.responses')
+                                textOutput("behavior"),
+                                hr(),
+                                strong("Key"),
+                                verbatimTextOutput("key")
                               ),#sidebarPanel end
                               
                               mainPanel(
-                                #plotOutput("plot"),
-                                #plotOutput("plot2")
+                                plotOutput("plot3"),
+                                plotOutput("plot4")
                               )
                             ) #fluidPage end
                    )

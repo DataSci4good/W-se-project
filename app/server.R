@@ -80,6 +80,59 @@ shinyServer(function(input, output) {
                                                            columnDefs = list(name = c('1','2'), targets = c(1, 2))
                                                            ))
   
+  
+  #Code for second tab
+  
+  output$behavior = renderText(behavior.list[as.integer(input$behaviors)])
+  
+  output$key = renderText({paste('No/No: Did not do before or after course.',
+                                 'Yes/Yes: Did before and after course.',
+                                 'No/Yes: Did not do before course but does now.',
+                                 'Yes/No: Did before course but does not do now.',
+                                 'NA: Did not respond to one or both questions',
+                                 sep = '\n')})
+  
+  behavior.grouped = reactive({
+    select_(behavior.full,'StudentID','Pct_Correct',B = paste('B',input$behaviors,sep = '')) %>%
+    group_by(B)
+  })
+  
+  behavior.summary = reactive({
+    summarise(behavior.grouped(),summ = n())
+  })
+  
+  plotData3 = function(df) {
+    ggplot(df, 
+           aes(x=B, y = summ)) +
+      geom_bar(stat = 'identity', fill="white", colour="darkgreen") +
+      theme_bw() + 
+      ylab('Frequency') + 
+      xlab('Response') +
+      ggtitle('Numbers of Respondents By Survey Question Response') +
+      geom_text(aes(label = round(summ, 2), 
+                    y = round(summ) + 1500))
+  }
+  
+  output$plot3 = renderPlot({plotData3(behavior.summary())})
+  
+  behavior.summary.score = reactive({
+    summarise(behavior.grouped(),summ = mean(Pct_Correct,na.rm = TRUE))
+  })
+  
+  plotData4 = function(df) {
+    ggplot(df, 
+           aes(x=B, y =  summ)) +
+      geom_bar(stat = 'identity', fill="white", colour="darkgreen") +
+      theme_bw() + 
+      ylab('Percentage') + 
+      xlab('Response') +
+      ggtitle('Mean Test Score By Survey Question Response') +
+      geom_text(aes(label = round(summ, 2), 
+                    y = round(summ) + 4))
+  } 
+  
+  output$plot4 = renderPlot({plotData4(behavior.summary.score())})
+  
   #Testing
   output$test = renderText({paste('Question', selected.question.number(), 'Choices')})
   output$test = renderText({paste('Question', question.regex())})
