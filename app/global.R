@@ -153,3 +153,9 @@ behavior.list = c('Use a spending plan/budget.',
               'Have plans for further education.')
 
 behavior.full = rbind(test14,test15)
+
+behavior.response = c('No/No','No/Yes','Yes/No','Yes/Yes','NA')
+behavior.explain = c('Did not do before or after course.','Did not do before course but does now.',
+                     'Did before course but does not do now.','Did before and after course.',
+                     'Did not respond to one or both questions')
+behavior.key = data.frame(Response = behavior.response,Explanation = behavior.explain)

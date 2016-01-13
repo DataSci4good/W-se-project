@@ -28,6 +28,7 @@ shinyUI(navbarPage('Wise Project', id='nav',
                             fluidPage(
                               
                               sidebarPanel(
+                                verbatimTextOutput('intro'),
                                 radioButtons('behaviors', 
                                              'Choose a Behavior To View',
                                              c('1' = '1', '2' = '2', '3' = '3', '4' = '4',
@@ -37,8 +38,8 @@ shinyUI(navbarPage('Wise Project', id='nav',
                                 #verbatimTextOutput("value"),
                                 textOutput("behavior"),
                                 hr(),
-                                strong("Key"),
-                                verbatimTextOutput("key")
+                                #strong("Key"),
+                                dataTableOutput("behavior.key")
                               ),#sidebarPanel end
                               
                               mainPanel(

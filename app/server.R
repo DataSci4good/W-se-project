@@ -85,12 +85,18 @@ shinyServer(function(input, output) {
   
   output$behavior = renderText(behavior.list[as.integer(input$behaviors)])
   
-  output$key = renderText({paste('No/No: Did not do before or after course.',
-                                 'Yes/Yes: Did before and after course.',
-                                 'No/Yes: Did not do before course but does now.',
-                                 'Yes/No: Did before course but does not do now.',
-                                 'NA: Did not respond to one or both questions',
-                                 sep = '\n')})
+  output$behavior.key = renderDataTable(behavior.key,
+                                        options = list(searching = FALSE, 
+                                                       pageLength = 14, 
+                                                       lengthChange = FALSE, 
+                                                       ordering = FALSE,
+                                                       paging = FALSE, 
+                                                       info = FALSE, 
+                                                       columnDefs = list(name = c('1','2'), targets = c(1, 2))
+                                        ))
+  
+
+  output$intro = renderText('Combined responses to questions 10 and 11.' )
   
   behavior.grouped = reactive({
     select_(behavior.full,'StudentID','Pct_Correct',B = paste('B',input$behaviors,sep = '')) %>%
